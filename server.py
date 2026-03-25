@@ -9,6 +9,7 @@ import asyncio
 import json
 import os
 import urllib.request
+import urllib.parse
 from typing import Dict, Set, Tuple
 
 from aiohttp import WSMsgType, web
@@ -31,7 +32,7 @@ def _fetch_admin_data_sync(access_code: str) -> Tuple[bool, dict]:
     """Sync GET Central API admin/data. Returns (ok, data_or_error)."""
     if not CENTRAL_API_URL or not access_code:
         return False, {}
-    url = f"{CENTRAL_API_URL}/admin/data?access_code={urllib.request.quote(access_code)}"
+    url = f"{CENTRAL_API_URL}/admin/data?access_code={urllib.parse.quote(access_code)}"
     try:
         req = urllib.request.Request(url, method="GET")
         with urllib.request.urlopen(req, timeout=15) as r:
